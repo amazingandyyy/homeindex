@@ -6,22 +6,22 @@ var router = express.Router();
 var Message = require('../models/message');
 
 router.post('/', (req, res) => {
-    console.log(req.query);
-    Message.create(req.query, (err, message) => {
+    console.log('ok: ', req.body);
+    Message.create(req.body, (err, message) => {
         if (err) return res.status(404).send(err);
-        res.send('add one successfully');
+        res.status(200).send(message);
     });
 });
 router.delete('/', (req, res) => {
-    console.log(req.query);
-    Message.delete(req.query, (err, message) => {
+    console.log(req.body);
+    Message.delete(req.body, (err, message) => {
         if (err) return res.status(404).send(err);
-        res.send('delete one successfully');
+        res.status(200).send(message);
     });
 });
 router.put('/', (req, res) => {
-    console.log(req.query);
-    Message.update(req.query, (err, message) => {
+    console.log(req.body);
+    Message.update(req.body, (err, message) => {
         if (err) return res.status(404).send(err);
         res.send('update one successfully');
     });
