@@ -32,5 +32,5 @@ exports.delete = function(message, cb) {
 };
 
 exports.update = function(message, cb) {
-    db.run(`UPDATE messages SET name = '${message.name}', body = '${message.body}',time = '${timeStamp}' WHERE id = '${message.id}'`, cb)
+    db.run(`UPDATE messages SET name = '${message.name}', body = '${message.body}',time = '${message.time}' WHERE id = '${message.id}'`, cb)
 };

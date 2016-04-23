@@ -129,7 +129,7 @@ function editterFormSubmit() {
             data: {
                 name: name,
                 body: body,
-                time: timeStamp,
+                time: timeStamp;,
                 id: id
             }
         })
