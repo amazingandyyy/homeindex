@@ -17,7 +17,7 @@ function checkGrade() {
     // console.log(typeof gradeArr);
 
     console.log('gradeArr.length): ', gradeArr.length);
-    for (var i = 1; i < gradeArr.length; i++) {
+    for (var i = 0; i < gradeArr.length; i++) {
         console.log(gradeArr[i]);
         var id = $(gradeArr[i]).attr('data-id');
         // console.log(`id${i}: `, id);
@@ -46,16 +46,16 @@ function checkSummary() {
     var totalrr = $('.scoresTable .total');
     var scoreSummaryArr = [];
     var totalSummaryArr = [];
-    for (var i = 1; i < scoreArr.length; i++) {
+    for (var i = 0; i < scoreArr.length; i++) {
         scoreSummaryArr.push(Number(scoreArr[i].innerHTML));
     }
-    for (var i = 1; i < totalrr.length; i++) {
+    for (var i = 0; i < totalrr.length; i++) {
         totalSummaryArr.push(Number(totalrr[i].innerHTML));
     }
     // console.log('scoreSummaryArr: ', scoreSummaryArr);
     var summary = $('.summary');
-    var scoreSummary = scoreSummaryArr.reduce((a, b) => a + b);
-    var totalSummary = totalSummaryArr.reduce((a, b) => a + b);
+    var scoreSummary = scoreSummaryArr.reduce(function(a, b){return a + b},0);
+    var totalSummary = totalSummaryArr.reduce(function(a, b){return a + b}, 0);
     var gradeSummary = Number(scoreSummary) / Number(totalSummary);
 
     summary.find('.scoreS').text(scoreSummary.toString());

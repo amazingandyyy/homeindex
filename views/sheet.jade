@@ -30,14 +30,6 @@ block content
 							th grade
 							th edit/delete
 					tbody.scoresTable
-						tr.template.newScore
-							th.name(scope='row')
-							td.score
-							td.total
-							td.grade
-							td 
-								button.edit(class="btn btn-primary btn-xs") edit
-								button.delete(class="btn btn-danger btn-xs") delete
 						each score in scores
 							tr(data-id='#{score.id}')
 								th.name(scope='row')= score.name
@@ -56,6 +48,14 @@ block content
 							td
 								b.gradeS grade
 							td
+						tr.template.newScore
+							th.name(scope='row')
+							td.score
+							td.total
+							td.grade
+							td 
+								button.edit(class="btn btn-primary btn-xs") edit
+								button.delete(class="btn btn-danger btn-xs") delete
 	.editterDiv
 		.container
 			.row
@@ -68,16 +68,3 @@ block content
 								input(class="score" placeholder="test score" name="score")
 								input(class="total" placeholder="test total" name="total")
 								button(type='submit' class="btn btn-primary btn-xs") update
-	//- .chatBox
-	//-   .container
-	//-     form.messageInput
-	//-       .row
-	//-         .col-xs-6
-	//-           input.form-control(class="name" type='text', placeholder='Your name')
-	//-         .col-xs-6
-	//-           input.form-control(class="image" type='text', placeholder='Your image URL')
-	//-         .col-xs-12
-	//-           .input-group
-	//-             input.form-control(class="message" type='text', placeholder='Your message')
-	//-             span.input-group-btn
-	//-               button.btn.btn-default(type='submit') send
