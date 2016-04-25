@@ -2,27 +2,27 @@
 
 var express = require('express');
 var router = express.Router();
-var Message = require('../models/message');
+var Score = require('../models/score');
 
 router.post('/', (req, res) => {
     console.log('add: ', req.body);
-    Message.create(req.body, (err, message) => {
+    Score.create(req.body, (err, score) => {
         if (err) return res.status(404).send(err);
-        res.status(200).send(message);
+        res.status(200).send(score);
     });
 });
 router.delete('/', (req, res) => {
     console.log('delete: ', req.body);
-    Message.delete(req.body, (err, message) => {
+    Score.delete(req.body, (err, score) => {
         if (err) return res.status(404).send(err);
-        res.status(200).send(message);
+        res.status(200).send(score);
     });
 });
 router.put('/', (req, res) => {
     console.log('update: ', req.body);
-    Message.update(req.body, (err, message) => {
+    Score.update(req.body, (err, score) => {
         if (err) return res.status(404).send(err);
-        res.send('update one successfully');
+        res.send('update one score successfully');
     });
 });
 

@@ -1,0 +1,83 @@
+extends ./layout.jade
+
+block content
+	.container
+		.row
+			.col-xs-12.col-sm-10
+				form.messageDiv.scoreInputForm
+					table.table.table-bordered
+						thead
+							tr
+								th 
+									input(class="name" placeholder="test name" name="name")
+								th 
+									input(class="score" placeholder="test score" name="score" type="number")
+								th 
+									input(class="total" placeholder="test total" name="total" type="number")
+								th 
+									button(type='submit' class="btn btn-primary btn-xs") add
+
+		.scoreContainer
+			.row
+				.col-xs-12.col-sm-2
+				.col-xs-12.col-sm-10
+				table.table.table-hover
+					thead
+						tr
+							th name
+							th score
+							th total
+							th grade
+							th edit/delete
+					tbody.scoresTable
+						tr.template.newScore
+							th.name(scope='row')
+							td.score
+							td.total
+							td.grade
+							td 
+								button.edit(class="btn btn-primary btn-xs") edit
+								button.delete(class="btn btn-danger btn-xs") delete
+						each score in scores
+							tr(data-id='#{score.id}')
+								th.name(scope='row')= score.name
+								td.score= score.score
+								td.total= score.total
+								td(data-id='#{score.id}').grade
+								td
+									button.edit(class="btn btn-primary btn-xs" data-id='#{score.id}') edit
+									button.delete(class="btn btn-danger btn-xs" data-id='#{score.id}') delete
+						tr.table-info.summary
+							th Summary 
+							td
+								b.scoreS score
+							td
+								b.totalS total
+							td
+								b.gradeS grade
+							td
+	.editterDiv
+		.container
+			.row
+				.col-xs-12.col-sm-2
+				.col-xs-12.col-sm-10
+					form.messageDiv.editterForm
+						.panel.panel-default
+							.panel-body
+								input(class="name" placeholder="test name" name="name")
+								input(class="score" placeholder="test score" name="score")
+								input(class="total" placeholder="test total" name="total")
+								button(type='submit' class="btn btn-primary btn-xs") update
+	//- .chatBox
+	//-   .container
+	//-     form.messageInput
+	//-       .row
+	//-         .col-xs-6
+	//-           input.form-control(class="name" type='text', placeholder='Your name')
+	//-         .col-xs-6
+	//-           input.form-control(class="image" type='text', placeholder='Your image URL')
+	//-         .col-xs-12
+	//-           .input-group
+	//-             input.form-control(class="message" type='text', placeholder='Your message')
+	//-             span.input-group-btn
+	//-               button.btn.btn-default(type='submit') send
