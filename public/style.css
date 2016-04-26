@@ -41,10 +41,9 @@ form.messageDiv.scoreInputForm button{
     float: right;
 }
 
-.template{
+.template, .newRoom.template{
     display: none;
 }
-
 .btn.btn-xs{
     margin-left: 5px;
 }
@@ -60,32 +59,43 @@ form.messageDiv.scoreInputForm button{
     left: 0px;
     padding-top: 20%;
 }
-.addRoomDiv {
+.addRoomDiv, .editRoomDiv {
     display: none;
     z-index: 99;
     height: 100%;
     width: 100%;
-    background: rgba(0,0,0,0.5);
     position: absolute;
     top: 0px;
     left: 0px;
-    padding-top: 150px;
+    padding-top: 130px;
     text-align: center;
-}
-
-.addRoomDiv .editterForm {
-    background: white;
-    padding: 30px 50px 40px 50px;
+    background: rgba(255,255,255,0.95);
+    /*padding: 30px 50px 40px 50px;*/
     box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.4);
 }
-.addRoomDiv .editterForm .btn {
-    margin: 0px;
+.editRoomDiv .btn-block {
+    margin-bottom: -8px;
+    margin-top: -8px;
 }
+.addRoomDiv input {
+    margin-top: 20px;
+}
+.editRoomDiv input{
+    margin-bottom: 10px;
+ }
 
 .btn-group-vertical>.btn:first-child:not(:last-child),.btn-group-vertical>.btn+.btn, .btn-group-vertical>.btn+.btn-group, .btn-group-vertical>.btn-group+.btn, .btn-group-vertical>.btn-group+.btn-group {
     outline: none;
 }
+.table>thead>tr>th {
+    vertical-align: top;
+}
 
+.btn.btn-xs {
+    height: 28px;
+    padding-left: 6px;
+    padding-right: 6px;
+}
 
 
 

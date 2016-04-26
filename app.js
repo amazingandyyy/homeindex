@@ -16,7 +16,7 @@ app.set('view engine', 'jade');
 
 app.get('/', (req, res) => {
     res.render('index', {
-        title: "Home",
+        title: "Welcome",
         theme: "readable"
     });
 });

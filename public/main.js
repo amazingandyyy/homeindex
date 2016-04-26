@@ -9,19 +9,39 @@ function init() {
     $('.scoreContainer').on('click', '.edit', editOne);
     $('.addRoom').on('click', addRoom);
     $('.editterForm').submit(editterFormSubmit);
-    $('.addRoomDForm').submit(addRoomDFormSubmit);
     checkGrade();
+    //  for this project
+    $('.roomContainer').find('.showall').addClass('selected btn-primary');
+    check();
+    $('.addRoomForm').submit(addRoomFormSubmit);
+    $('.addItemForm').submit(addItemFormSubmit);
     $('.addRoomForm .cancel').click(addRoomCancelClicked);
+    $('.editRoomForm .cancel').click(editRoomCancelClicked);
+
+    $('.roomContainer').on('click', '.roomContainer button' - '.showall', roomSelected);
+    $('.roomContainer').on('dblclick', '.roomContainer button' - '.showall', roomEdit);
+    $('.roomContainer').find('.showall').click(showAllRoomSelected);
+}
+
+function check() {
+
+    var length = $('.btn.btn-default.showall.selected.btn-primary').length;
+    if (length === 1) {
+        $('.addItemTHead').addClass('hidden');
+    } else {
+        $('.addItemTHead').removeClass('hidden');
+    }
+    console.log('Checked length: ', length);
 }
 
 function checkGrade() {
-    console.log("checkGrade Start");
+    // console.log("checkGrade Start");
     var gradeArr = $('.grade');
     // console.log(typeof gradeArr);
 
     console.log('gradeArr.length): ', gradeArr.length);
     for (var i = 0; i < gradeArr.length; i++) {
-        console.log(gradeArr[i]);
+        // console.log(gradeArr[i]);
         var id = $(gradeArr[i]).attr('data-id');
         // console.log(`id${i}: `, id);
         var score = $(`tr[data-id='${id}']`).find('.score').text();
@@ -57,8 +77,12 @@ function checkSummary() {
     }
     // console.log('scoreSummaryArr: ', scoreSummaryArr);
     var summary = $('.summary');
-    var scoreSummary = scoreSummaryArr.reduce(function(a, b){return a + b},0);
-    var totalSummary = totalSummaryArr.reduce(function(a, b){return a + b}, 0);
+    var scoreSummary = scoreSummaryArr.reduce(function(a, b) {
+        return a + b
+    }, 0);
+    var totalSummary = totalSummaryArr.reduce(function(a, b) {
+        return a + b
+    }, 0);
     var gradeSummary = Number(scoreSummary) / Number(totalSummary);
 
     summary.find('.scoreS').text(scoreSummary.toString());
@@ -88,99 +112,99 @@ function guid() {
 }
 
 function scoreInputFormSubmitted(e) {
-    var id = guid();
-    // console.log('id: ', id);
-    // console.log('time: ', timeStamp);
-    e.preventDefault();
-    // console.log('submitted');
-    var name = $('.name').val();
-    var score = $('.score').val();
-    var total = $('.total').val();
-
-    $.ajax({
-            url: '/sheet/score/',
-            method: 'POST',
-            data: {
-                name: name,
-                score: score,
-                total: total,
-                id: id
-            }
-        })
-        .done(function(data) {
-            // console.log('data: ', data);
-            // console.log('ddd');
-            var name = data.name;
-            var score = data.score;
-            var total = data.total;
-            var id = data.id;
-
-            // var time = moment().format('LLL');
-            // var newScore = $('tr.template.newScore').clone().addClass('animated bounceInwe');
-            var newScore = $('tr.template.newScore').clone().addClass('animated flipInX');
-            // console.log('newScore: ', newScore);
-            newScore.removeClass('template');
-            newScore.find('.name').text(name);
-            newScore.find('.score').text(score);
-            newScore.find('.total').text(total);
-            newScore.find('.grade').attr('data-id', id);
-            newScore.attr('data-id', id);
-            newScore.find('.delete').attr('data-id', id);
-            newScore.find('.edit').attr('data-id', id);
-
-            var score = newScore.find('.score').text();
-            var total = newScore.find('.total').text();
-            var grade = Number(score) / Number(total);
-            // console.log('grade OF the new score: ', grade);
-            if (grade > 0.9) {
-                newScore.find('.grade').text('A');
-            } else if (grade > 0.8 & grade < 0.9) {
-                newScore.find('.grade').text('B');
-                Å
-            } else if (grade > 0.7 & grade < 0.8) {
-                newScore.find('.grade').text('C');
-            } else if (grade > 0.6 & grade < 0.7) {
-                newScore.find('.grade').text('D');
-            } else {
-                newScore.find('.grade').text('F');
-            };
-
-            $('tbody.scoresTable').prepend(newScore);
-            // checkGrade();
-
-            $('form.scoreInputForm input').val('');
-            checkGrade();
-
-        })
-        .fail(function(err) {
-            // console.log('err when adding: ', err);
-        });
+    // var id = guid();
+    // // console.log('id: ', id);
+    // // console.log('time: ', timeStamp);
+    // e.preventDefault();
+    // // console.log('submitted');
+    // var name = $('.name').val();
+    // var score = $('.score').val();
+    // var total = $('.total').val();
+    //
+    // $.ajax({
+    //         url: '/sheet/score/',
+    //         method: 'POST',
+    //         data: {
+    //             name: name,
+    //             score: score,
+    //             total: total,
+    //             id: id
+    //         }
+    //     })
+    //     .done(function(data) {
+    //         // console.log('data: ', data);
+    //         // console.log('ddd');
+    //         var name = data.name;
+    //         var score = data.score;
+    //         var total = data.total;
+    //         var id = data.id;
+    //
+    //         // var time = moment().format('LLL');
+    //         // var newScore = $('tr.template.newScore').clone().addClass('animated bounceInwe');
+    //         var newScore = $('tr.template.newScore').clone().addClass('animated flipInX');
+    //         // console.log('newScore: ', newScore);
+    //         newScore.removeClass('template');
+    //         newScore.find('.name').text(name);
+    //         newScore.find('.score').text(score);
+    //         newScore.find('.total').text(total);
+    //         newScore.find('.grade').attr('data-id', id);
+    //         newScore.attr('data-id', id);
+    //         newScore.find('.delete').attr('data-id', id);
+    //         newScore.find('.edit').attr('data-id', id);
+    //
+    //         var score = newScore.find('.score').text();
+    //         var total = newScore.find('.total').text();
+    //         var grade = Number(score) / Number(total);
+    //         // console.log('grade OF the new score: ', grade);
+    //         if (grade > 0.9) {
+    //             newScore.find('.grade').text('A');
+    //         } else if (grade > 0.8 & grade < 0.9) {
+    //             newScore.find('.grade').text('B');
+    //             Å
+    //         } else if (grade > 0.7 & grade < 0.8) {
+    //             newScore.find('.grade').text('C');
+    //         } else if (grade > 0.6 & grade < 0.7) {
+    //             newScore.find('.grade').text('D');
+    //         } else {
+    //             newScore.find('.grade').text('F');
+    //         };
+    //
+    //         $('tbody.scoresTable').prepend(newScore);
+    //         // checkGrade();
+    //
+    //         $('form.scoreInputForm input').val('');
+    //         checkGrade();
+    //
+    //     })
+    //     .fail(function(err) {
+    //         // console.log('err when adding: ', err);
+    //     });
 
 }
 
 function deleteOne(e) {
-    var id = $(e.target).attr('data-id');
-    // console.log('id delete clicked: ', id);
-
-    $.ajax({
-            url: '/sheet/score/',
-            method: 'DELETE',
-            data: {
-                id: id,
-            }
-        })
-        .done(function(data) {
-            console.log('id has been deleted for sure: ', data.id);
-            $(`.scoreContainer tr[data-id='${data.id}']`).addClass('animated flipOutX');
-            setTimeout(function() {
-                $(`.scoreContainer tr[data-id='${data.id}']`).remove();
-                checkGrade();
-            }, 1000);
-
-        })
-        .fail(function(err) {
-            console.log('err when deleting: ', err);
-        });
+    // var id = $(e.target).attr('data-id');
+    // // console.log('id delete clicked: ', id);
+    //
+    // $.ajax({
+    //         url: '/sheet/score/',
+    //         method: 'DELETE',
+    //         data: {
+    //             id: id,
+    //         }
+    //     })
+    //     .done(function(data) {
+    //         console.log('id has been deleted for sure: ', data.id);
+    //         $(`.scoreContainer tr[data-id='${data.id}']`).addClass('animated flipOutX');
+    //         setTimeout(function() {
+    //             $(`.scoreContainer tr[data-id='${data.id}']`).remove();
+    //             checkGrade();
+    //         }, 1000);
+    //
+    //     })
+    //     .fail(function(err) {
+    //         console.log('err when deleting: ', err);
+    //     });
 
 }
 
@@ -205,6 +229,11 @@ function editOne(e) {
     editter.find('.score').val(score);
     editter.find('.total').val(total);
 }
+
+
+
+
+//   for this project
 function addRoom(e) {
     e.preventDefault();
     console.log('addRoom clicked');
@@ -217,43 +246,178 @@ function addRoomCancelClicked(e) {
     e.preventDefault();
     var addRoomDiv = $('.addRoomDiv');
     addRoomDiv.fadeOut(100);
-    setTimeout(function(){
+    setTimeout(function() {
         addRoomDiv.css('display', 'none');
-    }, 300)
+    }, 300);
+    addRoomDiv.find('input').val('');
 }
 
-function addRoomDFormSubmit() {
-
+function editRoomCancelClicked(e) {
+    console.log('ddd');
+    e.preventDefault();
+    var editRoomDiv = $('.editRoomDiv');
+    editRoomDiv.fadeOut(100);
+    setTimeout(function() {
+        editRoomDiv.css('display', 'none');
+    }, 300);
+    editRoomDiv.find('input').val('');
 }
 
-function editterFormSubmit() {
-    var editter = $('.editterDiv');
-    var name = editter.find('.name').val();
-    var score = editter.find('.score').val();
-    var total = editter.find('.total').val();
-    var id = editter.find('button').attr('data-id');
-    // console.log('name: ', name, 'score: ', score, 'total: ', total, 'id: ', id);
-    var timeStamp = moment().format('LLL');
-
+function addRoomFormSubmit(e) {
+    e.preventDefault();
+    var name = $('.addRoomForm').find('.name').val();
+    // console.log('Room name added: ', name);
     $.ajax({
-            url: '/sheet/score/',
-            method: 'PUT',
+            url: '/home/room',
+            method: 'POST',
+            data: {
+                name: name
+            }
+        })
+        .done(function(data) {
+            console.log('data: ', data);
+
+            var newRoom = $('.template.newRoom').clone();
+            newRoom.removeClass('template');
+            newRoom.text(`${name}`);
+            newRoom.addClass('animated flipInX');
+            newRoom.attr('data-id', `${data.insertId}`);
+            $('.roomContainer button:nth-last-child(1)').before(newRoom);
+
+
+            var addRoomDiv = $('.addRoomDiv');
+            addRoomDiv.fadeOut(100);
+            setTimeout(function() {
+                addRoomDiv.css('display', 'none');
+            }, 500)
+            addRoomDiv.find('input').val('');
+            check();
+        })
+        .fail(function(err) {
+            console.log('err when adding a room: ', err);
+        });
+}
+
+function addItemFormSubmit(e) {
+    console.log('dddd');
+    e.preventDefault();
+    var name = $('.itemName').val();
+    var value = $('.itemValue').val();
+    var room = $('.btn.btn-default.roomBtn.selected.btn-primary').attr('data-id');
+    console.log('Item name added: ', name);
+    console.log('Item value added: ', value);
+    console.log('Room id added: ', room);
+    $.ajax({
+            url: '/home/item',
+            method: 'POST',
             data: {
                 name: name,
-                score: score,
-                total: total,
+                value: value,
+                room: room
+            }
+        })
+        .done(function(data) {
+            console.log('successful added');
+            console.log('data: ', data);
+
+            var newItem = $('.template.newItem').clone();
+            newItem.removeClass('template');
+            newItem.addClass('animated flipInX');
+            newItem.attr('data-id', `${data.insertId}`);
+            newItem.find('.edit').attr('data-id', `${data.insertId}`);
+            newItem.find('.delete').attr('data-id', `${data.insertId}`);
+            newItem.find('.name').text(name);
+            newItem.find('.value').text(value);
+            $('.scoresTable').prepend(newItem);
+        })
+        .fail(function(err) {
+            console.log('err when adding a item: ', err);
+        });
+}
+
+function roomSelected(e) {
+    var $room = $(e.target);
+    var name = $room.text();
+    var id = $room.attr('data-id');
+    console.log('slected room name : ', name);
+    console.log('slected room id : ', id);
+    $('.roomContainer button').removeClass('btn-primary selected');
+    $room.addClass('selected btn-primary');
+
+    $.ajax({
+            url: '/home/room/getSpecificRoom',
+            method: 'GET',
+            data: {
                 id: id
             }
         })
         .done(function(data) {
-            editter.fadeOut(100).css('display', 'none');
-            editter.find('.container').removeClass('animated bounceIn');
-            editter.find('button').attr('data-id', '');
-            checkGrade();
+            console.log('successfully get items of this room');
+            console.log('data: ', data);
+
+            // var newItem = $('.template.newItem').clone();
+            // newItem.removeClass('template');
+            // newItem.addClass('animated flipInX');
+            // newItem.attr('data-id',`${data.insertId}`);
+            // newItem.find('.edit').attr('data-id',`${data.insertId}`);
+            // newItem.find('.delete').attr('data-id',`${data.insertId}`);
+            // newItem.find('.name').text(name);
+            // newItem.find('.value').text(value);
+            // $('.scoresTable').prepend(newItem);
         })
         .fail(function(err) {
-            console.log('err: ', err);
+            console.log('err when getting a room: ', err);
         });
+
+    check();
+
+}
+
+function showAllRoomSelected(e) {
+    var $room = $(e.target);
+    var name = $room.text();
+    var id = $room.attr('data-id');
+    $('.roomContainer button').removeClass('btn-primary selected');
+    $room.addClass('selected btn-primary');
+    check();
+}
+
+function roomEdit(e) {
+    e.preventDefault();
+    console.log('editRoom clicked');
+    var editRoomDiv = $('.editRoomDiv');
+    editRoomDiv.fadeIn(100).css('display', 'inline-block');
+    editRoomDiv.find('.container').addClass('animated bounceIn');
+}
+
+function editterFormSubmit() {
+    // var editter = $('.editterDiv');
+    // var name = editter.find('.name').val();
+    // var score = editter.find('.score').val();
+    // var total = editter.find('.total').val();
+    // var id = editter.find('button').attr('data-id');
+    // // console.log('name: ', name, 'score: ', score, 'total: ', total, 'id: ', id);
+    // var timeStamp = moment().format('LLL');
+    //
+    // $.ajax({
+    //         url: '/sheet/score/',
+    //         method: 'PUT',
+    //         data: {
+    //             name: name,
+    //             score: score,
+    //             total: total,
+    //             id: id
+    //         }
+    //     })
+    //     .done(function(data) {
+    //         editter.fadeOut(100).css('display', 'none');
+    //         editter.find('.container').removeClass('animated bounceIn');
+    //         editter.find('button').attr('data-id', '');
+    //         checkGrade();
+    //     })
+    //     .fail(function(err) {
+    //         console.log('err: ', err);
+    //     });
 }
 
 

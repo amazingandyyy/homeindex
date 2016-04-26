@@ -8,16 +8,17 @@ exports.getAll = function(cb) {
 };
 
 exports.create = function(room, cb) {
-    db.query(`INSERT INTO rooms (name) VALUES ('${room.name}')`,cb);
+    console.log("create room", room);
+    db.query(`INSERT INTO rooms SET ?`, room, cb);
 };
 
-exports.delete = function(score, cb) {
-    console.log('id: ', score.id);
-    db.run(`DELETE FROM scores WHERE id = '${score.id}'`, cb(null, {
-        id: score.id
-    }))
+exports.delete = function(room, cb) {
+    console.log('id: ', room.id);
+    db.run(`DELETE FROM scores WHERE id = '${room.id}'`, cb(null, {
+        id: room.id
+    }));
 };
 
-exports.update = function(score, cb) {
-    db.run(`UPDATE scores SET name = '${score.name}', score = '${score.score}',total = '${score.total}' WHERE id = '${score.id}'`, cb)
+exports.update = function(room, cb) {
+    db.run(`UPDATE scores SET name = '${room.name}' WHERE id = '${room.id}'`, cb)
 };
