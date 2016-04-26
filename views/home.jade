@@ -1,0 +1,67 @@
+extends ./layout.jade
+
+block content
+	.container
+		.row
+			.col-xs-12.col-sm-2
+				.btn-group-vertical(role='group', aria-label='...')
+					each room in rooms
+						button.btn.btn-default(type='button')= room.name
+					button.btn.btn-default.addRoom(type='button') 
+						b 
+							i.fa.fa-plus(aria-hidden='true')
+			.col-xs-12.col-sm-10
+				.scoreContainer
+					table.table.table-hover
+						thead
+							tr
+								th item
+								th value
+								th edit/delete
+						tbody.scoresTable
+							each score in scores
+								tr(data-id='#{score.id}')
+									th.name(scope='row')= score.name
+									td(data-id='#{score.id}').grade
+									td
+										button.edit(class="btn btn-primary btn-xs" data-id='#{score.id}') edit
+										button.delete(class="btn btn-danger btn-xs" data-id='#{score.id}') delete
+							tr.table-info.summary
+								th Summary 
+								td
+									b.scoreS score
+								td
+									b.totalS total
+								td
+							tr.template.newScore
+								th.name(scope='row')
+								td.score
+								td.total
+								td.grade
+								td 
+									button.edit(class="btn btn-primary btn-xs") edit
+									button.delete(class="btn btn-danger btn-xs") delete
+	.editterDiv
+		.container
+			.row
+				.col-xs-12.col-sm-2
+				.col-xs-12.col-sm-10
+					form.messageDiv.editterForm
+						.panel.panel-default
+							.panel-body
+								input(class="name" placeholder="test name" name="name")
+								input(class="score" placeholder="test score" name="score")
+								input(class="total" placeholder="test total" name="total")
+								button(type='submit' class="btn btn-primary btn-xs") update
+	.addRoomDiv
+		.container
+			.row
+				.col-xs-12.col-sm-3
+				.col-xs-12.col-sm-6
+					form.addRoomForm.editterForm
+								h4 Add a Room
+								input(class="name form-control" placeholder="test name" name="name")
+								br
+								button(type='submit' class="btn btn-block btn-primary btn-md") Add
+								br
+								.cancel(class="btn btn-block btn-default") Cancel

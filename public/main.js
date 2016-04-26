@@ -7,8 +7,11 @@ function init() {
     $('.scoreInputForm').submit(scoreInputFormSubmitted);
     $('.scoreContainer').on('click', '.delete', deleteOne);
     $('.scoreContainer').on('click', '.edit', editOne);
+    $('.addRoom').on('click', addRoom);
     $('.editterForm').submit(editterFormSubmit);
+    $('.addRoomDForm').submit(addRoomDFormSubmit);
     checkGrade();
+    $('.addRoomForm .cancel').click(addRoomCancelClicked);
 }
 
 function checkGrade() {
@@ -202,6 +205,26 @@ function editOne(e) {
     editter.find('.score').val(score);
     editter.find('.total').val(total);
 }
+function addRoom(e) {
+    e.preventDefault();
+    console.log('addRoom clicked');
+    var addRoomDiv = $('.addRoomDiv');
+    addRoomDiv.fadeIn(100).css('display', 'inline-block');
+    addRoomDiv.find('.container').addClass('animated bounceIn');
+}
+
+function addRoomCancelClicked(e) {
+    e.preventDefault();
+    var addRoomDiv = $('.addRoomDiv');
+    addRoomDiv.fadeOut(100);
+    setTimeout(function(){
+        addRoomDiv.css('display', 'none');
+    }, 300)
+}
+
+function addRoomDFormSubmit() {
+
+}
 
 function editterFormSubmit() {
     var editter = $('.editterDiv');
@@ -233,13 +256,14 @@ function editterFormSubmit() {
         });
 }
 
+
+
+
 function startingAnimation() {
     var intro = $('.intro')
     setTimeout(function() {
         $('.jumbotron').css('display', 'block').addClass('animated fadeIn');
         $('.intro').css('display', 'block').addClass('animated bounceIn');
     }, 100)
-
-
 
 }

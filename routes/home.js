@@ -2,25 +2,25 @@
 
 var express = require('express');
 var router = express.Router();
-var Score = require('../models/score');
+var Room = require('../models/room');
 
 
 router.get('/', (req, res, next) => {
-    Score.getAll((err, scores) => {
+    Room.getAll((err, rooms) => {
         // console.log("messages2: ", messages);
-        if (err) return res.status(404).send('cannot find the score');
-        var scores = scores.reverse();
+        if (err) return res.status(404).send('cannot find rooms');
+        var rooms = rooms.reverse();
         // console.log(messages);
-        res.render('sheet', {
-            title: "Board",
+        res.render('home', {
+            title: "Home",
             theme: "readable",
             active: "active",
-            scores: scores
+            rooms: rooms
         });
     });
 });
 
-router.use('/score', require('./score'));
+router.use('/room', require('./room'));
 // router.use('/delete', require('./delete'));
 // router.use('/update', require('./update'));
 // router.use('/find', require('./find'));

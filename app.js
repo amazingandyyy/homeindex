@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
     });
 });
 
-app.use('/sheet', require('./routes/sheet'));
+app.use('/home', require('./routes/home'));
 
 
 app.listen(PORT, err => {
