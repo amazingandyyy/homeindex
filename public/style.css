@@ -41,7 +41,7 @@ form.messageDiv.scoreInputForm button{
     float: right;
 }
 
-.template, .newRoom.template{
+.oldItem.template, .newRoom.template,.newItem.template{
     display: none;
 }
 .btn.btn-xs{

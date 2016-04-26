@@ -15,9 +15,9 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
     console.log('get a room of id: ', req.query);
-    Item.getOneRoom(req.query, (err, itemsOfRoom) => {
+    Item.getAll((err, items) => {
         if (err) return res.status(404).send(err);
-        res.status(200).send(itemsOfRoom);
+        res.status(200).send(items);
     });
 });
 

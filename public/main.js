@@ -21,6 +21,7 @@ function init() {
     $('.roomContainer').on('click', '.roomContainer button' - '.showall', roomSelected);
     $('.roomContainer').on('dblclick', '.roomContainer button' - '.showall', roomEdit);
     $('.roomContainer').find('.showall').click(showAllRoomSelected);
+    intializeAllItems();
 }
 
 function check() {
@@ -39,7 +40,7 @@ function checkGrade() {
     var gradeArr = $('.grade');
     // console.log(typeof gradeArr);
 
-    console.log('gradeArr.length): ', gradeArr.length);
+    // console.log('gradeArr.length): ', gradeArr.length);
     for (var i = 0; i < gradeArr.length; i++) {
         // console.log(gradeArr[i]);
         var id = $(gradeArr[i]).attr('data-id');
@@ -64,9 +65,9 @@ function checkGrade() {
 }
 
 function checkSummary() {
-    console.log("checkSummary Start");
-    var scoreArr = $('.scoresTable .score');
-    var totalrr = $('.scoresTable .total');
+    // console.log("checkSummary Start");
+    var scoreArr = $('.itemsTable .score');
+    var totalrr = $('.itemsTable .total');
     var scoreSummaryArr = [];
     var totalSummaryArr = [];
     for (var i = 0; i < scoreArr.length; i++) {
@@ -169,7 +170,7 @@ function scoreInputFormSubmitted(e) {
     //             newScore.find('.grade').text('F');
     //         };
     //
-    //         $('tbody.scoresTable').prepend(newScore);
+    //         $('tbody.itemsTable').prepend(newScore);
     //         // checkGrade();
     //
     //         $('form.scoreInputForm input').val('');
@@ -231,7 +232,33 @@ function editOne(e) {
 }
 
 
-
+function intializeAllItems() {
+    // $('.itemsTable').empty();
+    $.ajax({
+            url: '/home/room',
+            method: 'GET'
+        })
+        .done(function(data) {
+            var oldItemsArr = [];
+            console.log('successful get All items');
+            console.log('data: ', data);
+            for (var i = 0; i < data.length; i++) {
+                var oldItem = $('.oldItem.template').clone();
+                oldItem.removeClass('template');
+                // oldItem.addClass('animated flipInX');
+                oldItem.attr('data-id', `${data[i].id}`);
+                oldItem.find('.edit').attr('data-id', `${data[i].id}`);
+                oldItem.find('.delete').attr('data-id', `${data[i].id}`);
+                oldItem.find('.name').text(`${data[i].name}`);
+                oldItem.find('.value').text(`${data[i].value}`);
+                oldItemsArr.push(oldItem);
+            }
+            $('.itemsTable').append(oldItemsArr).addClass('animated fadeIn');
+        })
+        .fail(function(err) {
+            console.log('err when adding a item: ', err);
+        });
+}
 
 //   for this project
 function addRoom(e) {
@@ -277,7 +304,7 @@ function addRoomFormSubmit(e) {
         .done(function(data) {
             console.log('data: ', data);
 
-            var newRoom = $('.template.newRoom').clone();
+            var newRoom = $('.newRoom.template').clone();
             newRoom.removeClass('template');
             newRoom.text(`${name}`);
             newRoom.addClass('animated flipInX');
@@ -328,7 +355,7 @@ function addItemFormSubmit(e) {
             newItem.find('.delete').attr('data-id', `${data.insertId}`);
             newItem.find('.name').text(name);
             newItem.find('.value').text(value);
-            $('.scoresTable').prepend(newItem);
+            $('.itemsTable').prepend(newItem);
         })
         .fail(function(err) {
             console.log('err when adding a item: ', err);
@@ -336,6 +363,7 @@ function addItemFormSubmit(e) {
 }
 
 function roomSelected(e) {
+    // clearItemsTable();
     var $room = $(e.target);
     var name = $room.text();
     var id = $room.attr('data-id');
@@ -343,35 +371,53 @@ function roomSelected(e) {
     console.log('slected room id : ', id);
     $('.roomContainer button').removeClass('btn-primary selected');
     $room.addClass('selected btn-primary');
+    // if ($('.itemsTable').find('tr') == 0) {
 
-    $.ajax({
-            url: '/home/room/getSpecificRoom',
-            method: 'GET',
-            data: {
-                id: id
-            }
-        })
-        .done(function(data) {
-            console.log('successfully get items of this room');
-            console.log('data: ', data);
+        $.ajax({
+                url: '/home/room/getSpecificRoom',
+                method: 'GET',
+                data: {
+                    id: id
+                }
+            })
+            .done(function(data) {
+                console.log('successfully get items of this room');
+                console.log('data: ', data);
+                data.reverse();
+                var newItemArr = [];
+                for (var i = 0; i < data.length; i++) {
+                    console.log(`${data[i]}: `, data[i]);
+                    var newItem = $('.template.newItem').clone();
+                    newItem.removeClass('template');
+                    newItem.addClass('animated fadeIn');
+                    newItem.attr('data-id', `${data[i].id}`);
+                    newItem.find('.edit').attr('data-id', `${data[i].id}`);
+                    newItem.find('.delete').attr('data-id', `${data[i].id}`);
+                    newItem.find('.name').text(`${data[i].name}`);
+                    newItem.find('.value').text(`${data[i].value}`);
+                    newItemArr.push(newItem);
+                }
+                // console.log('newItem: ', newItem);
+                console.log('itemsTable: ', $('.itemsTable'));
+                // $('.itemsTable').children('tr').not('.template').remove();
+                // var aaa = $('.itemsTable:not(:has(.template))');
+                // console.log('aaa: ', aaa);
+                $('.itemsTable').prepend(newItemArr);
+            })
+            .fail(function(err) {
+                console.log('err when getting a room: ', err);
+            });
+    // }
 
-            // var newItem = $('.template.newItem').clone();
-            // newItem.removeClass('template');
-            // newItem.addClass('animated flipInX');
-            // newItem.attr('data-id',`${data.insertId}`);
-            // newItem.find('.edit').attr('data-id',`${data.insertId}`);
-            // newItem.find('.delete').attr('data-id',`${data.insertId}`);
-            // newItem.find('.name').text(name);
-            // newItem.find('.value').text(value);
-            // $('.scoresTable').prepend(newItem);
-        })
-        .fail(function(err) {
-            console.log('err when getting a room: ', err);
-        });
 
     check();
 
 }
+//
+// function clearItemsTable() {
+//     $('.itemsTable' - '.template').empty();
+// }
+
 
 function showAllRoomSelected(e) {
     var $room = $(e.target);
@@ -380,6 +426,8 @@ function showAllRoomSelected(e) {
     $('.roomContainer button').removeClass('btn-primary selected');
     $room.addClass('selected btn-primary');
     check();
+    // clearItemsTable();
+    intializeAllItems();
 }
 
 function roomEdit(e) {

@@ -29,33 +29,17 @@ block content
 											input.itemValue(placeholder="item value" name="value" type='number' required)
 										th
 											button.add(class="btn btn-primary btn-xs" type="submit") add item to this room
-							tbody.scoresTable
+							tbody.itemsTable
 								tr.newItem.template
 									th.name(scope='row')
 									td.value
 									td
 										button.edit(class="btn btn-primary btn-xs") edit
 										button.delete(class="btn btn-danger btn-xs") delete
-								//- each item in items
-								//- 	tr(data-id='#{item.id}')
-								//- 		th.name(scope='row')= item.name
-								//- 		td.value= item.value
-								//- 		td
-								//- 			button.edit(class="btn btn-primary btn-xs" data-id='#{item.id}') edit
-								//- 			button.delete(class="btn btn-danger btn-xs" data-id='#{item.id}') delete
-								tr.table-info.summary
-									th Summary 
-									td
-										b.scoreS score
-									td
-										b.totalS total
-									td
-								tr.template.newScore
+								tr.oldItem.template
 									th.name(scope='row')
-									td.score
-									td.total
-									td.grade
-									td 
+									td.value
+									td
 										button.edit(class="btn btn-primary btn-xs") edit
 										button.delete(class="btn btn-danger btn-xs") delete
 	.editterDiv

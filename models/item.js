@@ -8,8 +8,7 @@ exports.getAll = function(cb) {
 };
 
 exports.getOneRoom = function(room,cb) {
-        db.query(`items.name, items.value, items.id FROM items INNER JOIN rooms ON items.room=rooms.id WHERE rooms.id=${room};`,cb);
-    
+        db.query(`SELECT items.name, items.value, items.id FROM items INNER JOIN rooms ON items.room=rooms.id WHERE rooms.id=${room.id};`,cb);
 };
 
 exports.create = function(item, cb) {

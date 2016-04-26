@@ -16,19 +16,9 @@ router.get('/', (req, res, next) => {
                 theme: "readable",
                 active: "active",
                 rooms: rooms,
-            });
+        });
         // rooms = rooms.reverse();
-        // Item.getAll((err, items) => {
-        //     if (err) return res.status(404).send('cannot find items');
-        //     items = items.reverse();
-        //     res.render('home', {
-        //         title: "Home",
-        //         theme: "readable",
-        //         active: "active",
-        //         rooms: rooms,
-        //         items: items
-        //     });
-        // })
+
     });
 });
 
