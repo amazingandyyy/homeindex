@@ -8,7 +8,7 @@ exports.getAll = function(cb) {
 };
 
 exports.getOneRoom = function(room,cb) {
-        db.query(`SELECT items.name, items.value, items.id FROM items INNER JOIN rooms ON items.room=rooms.id WHERE rooms.id=${room.id};`,cb);
+    db.query(`SELECT items.name, items.value, items.id FROM items INNER JOIN rooms ON items.room=rooms.id WHERE rooms.id=${room.id};`,cb);
 };
 
 exports.create = function(item, cb) {
@@ -17,12 +17,10 @@ exports.create = function(item, cb) {
 };
 
 exports.delete = function(item, cb) {
-    console.log('id: ', score.id);
-    db.run(`DELETE FROM scores WHERE id = '${item.id}'`, cb(null, {
-        id: score.id
-    }))
+    console.log('id: ', item.id);
+    db.query(`DELETE FROM items WHERE id = '${item.id}'`, cb)
 };
 
 exports.update = function(item, cb) {
-    db.run(`UPDATE scores SET name = '${item.name}', value = '${item.value}' WHERE id = '${item.id}'`, cb)
+    db.query(`UPDATE items SET name = '${item.name}', value = '${item.value}' WHERE id = '${item.id}'`, cb)
 };

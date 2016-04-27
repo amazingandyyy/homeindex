@@ -48,18 +48,7 @@ form.messageDiv.scoreInputForm button{
     margin-left: 5px;
 }
 
-.editterDiv {
-    display: none;
-    z-index: 99;
-    height: 100%;
-    width: 100%;
-    background: rgba(0,0,0,0.5);
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    padding-top: 20%;
-}
-.addRoomDiv, .editRoomDiv {
+.addRoomDiv, .editRoomDiv, .editItemDiv {
     display: none;
     z-index: 99;
     height: 100%;
@@ -73,7 +62,7 @@ form.messageDiv.scoreInputForm button{
     /*padding: 30px 50px 40px 50px;*/
     box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.4);
 }
-.editRoomDiv .btn-block {
+.editRoomDiv .btn-block, .editItemDiv .btn-block {
     margin-bottom: -8px;
     margin-top: -8px;
 }

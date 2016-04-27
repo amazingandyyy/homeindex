@@ -8,18 +8,21 @@ function init() {
     $('.scoreContainer').on('click', '.delete', deleteOne);
     $('.scoreContainer').on('click', '.edit', editOne);
     $('.addRoom').on('click', addRoom);
-    $('.editterForm').submit(editterFormSubmit);
-    checkGrade();
+
     //  for this project
     $('.roomContainer').find('.showall').addClass('selected btn-primary');
     check();
     $('.addRoomForm').submit(addRoomFormSubmit);
     $('.addItemForm').submit(addItemFormSubmit);
+    $('.editItemForm').submit(editItemFormSubmit);
     $('.addRoomForm .cancel').click(addRoomCancelClicked);
     $('.editRoomForm .cancel').click(editRoomCancelClicked);
+    $('.editItemForm .cancel').click(editItemCancelClicked);
 
     $('.roomContainer').on('click', '.roomContainer button' - '.showall', roomSelected);
     $('.roomContainer').on('dblclick', '.roomContainer button' - '.showall', roomEdit);
+    $('.itemsTable').on('click', '.item .edit', itemEdit);
+    $('.itemsTable').on('click', '.item .delete', itemDelete);
     $('.roomContainer').find('.showall').click(showAllRoomSelected);
     intializeAllItems();
 }
@@ -33,6 +36,8 @@ function check() {
         $('.addItemTHead').removeClass('hidden');
     }
     console.log('Checked length: ', length);
+    var room =$('.roomContainer').find('.roomBtn.selected').text();
+$('.addItemTHead').find('button.add.btn.btn-primary.btn-xs').text(`add to ${room}`);
 }
 
 function checkGrade() {
@@ -280,7 +285,7 @@ function addRoomCancelClicked(e) {
 }
 
 function editRoomCancelClicked(e) {
-    console.log('ddd');
+    console.log('editRoomCancelClicked');
     e.preventDefault();
     var editRoomDiv = $('.editRoomDiv');
     editRoomDiv.fadeOut(100);
@@ -288,6 +293,16 @@ function editRoomCancelClicked(e) {
         editRoomDiv.css('display', 'none');
     }, 300);
     editRoomDiv.find('input').val('');
+}
+function editItemCancelClicked(e) {
+    console.log('editItemCancelClicked');
+    e.preventDefault();
+    var editItemDiv = $('.editItemDiv');
+    editItemDiv.fadeOut(100);
+    setTimeout(function() {
+        editItemDiv.css('display', 'none');
+    }, 300);
+    editItemDiv.find('input').val('');
 }
 
 function addRoomFormSubmit(e) {
@@ -356,6 +371,7 @@ function addItemFormSubmit(e) {
             newItem.find('.name').text(name);
             newItem.find('.value').text(value);
             $('.itemsTable').prepend(newItem);
+            $('.addItemTHead').find('input').val('');
         })
         .fail(function(err) {
             console.log('err when adding a item: ', err);
@@ -400,6 +416,7 @@ function roomSelected(e) {
                 // console.log('newItem: ', newItem);
                 console.log('itemsTable: ', $('.itemsTable'));
                 // $('.itemsTable').children('tr').not('.template').remove();
+                $('.itemsTable').empty();
                 // var aaa = $('.itemsTable:not(:has(.template))');
                 // console.log('aaa: ', aaa);
                 $('.itemsTable').prepend(newItemArr);
@@ -413,11 +430,6 @@ function roomSelected(e) {
     check();
 
 }
-//
-// function clearItemsTable() {
-//     $('.itemsTable' - '.template').empty();
-// }
-
 
 function showAllRoomSelected(e) {
     var $room = $(e.target);
@@ -426,7 +438,6 @@ function showAllRoomSelected(e) {
     $('.roomContainer button').removeClass('btn-primary selected');
     $room.addClass('selected btn-primary');
     check();
-    // clearItemsTable();
     intializeAllItems();
 }
 
@@ -438,36 +449,74 @@ function roomEdit(e) {
     editRoomDiv.find('.container').addClass('animated bounceIn');
 }
 
-function editterFormSubmit() {
-    // var editter = $('.editterDiv');
-    // var name = editter.find('.name').val();
-    // var score = editter.find('.score').val();
-    // var total = editter.find('.total').val();
-    // var id = editter.find('button').attr('data-id');
-    // // console.log('name: ', name, 'score: ', score, 'total: ', total, 'id: ', id);
-    // var timeStamp = moment().format('LLL');
-    //
-    // $.ajax({
-    //         url: '/sheet/score/',
-    //         method: 'PUT',
-    //         data: {
-    //             name: name,
-    //             score: score,
-    //             total: total,
-    //             id: id
-    //         }
-    //     })
-    //     .done(function(data) {
-    //         editter.fadeOut(100).css('display', 'none');
-    //         editter.find('.container').removeClass('animated bounceIn');
-    //         editter.find('button').attr('data-id', '');
-    //         checkGrade();
-    //     })
-    //     .fail(function(err) {
-    //         console.log('err: ', err);
-    //     });
+function itemEdit(e) {
+    e.preventDefault();
+    var editItemDiv = $('.editItemDiv');
+    editItemDiv.fadeIn(100).css('display', 'inline-block');
+    editItemDiv.find('.container').addClass('animated bounceIn');
+    editItemDiv.find('input').val('');
+
+    var id = $(e.target).attr('data-id');
+    var item = $(`.item[data-id='${id}']`);
+    var name = item.find('th.name').text();
+    var value = item.find('td.value').text();
+
+    editItemDiv.find('input.name').val(name);
+    editItemDiv.find('input.value').val(value);
+    editItemDiv.find('button').attr('data-id', id);
 }
 
+function itemDelete(e) {
+    e.preventDefault();
+    // console.log('Item Delete');
+    var id = $(e.target).attr('data-id');
+    // console.log('Id: ', id);
+
+    $.ajax({
+            url: '/home/item',
+            method: 'DELETE',
+            data: {
+                id: id
+            }
+        })
+        .done(function(data) {
+            console.log('dataaaa: ', data);
+            console.log('successful deleting');
+            console.log('data: ', data.id);
+            var item = $('.itemsTable').find(`tr.item[data-id='${id}']`);
+            console.log('item been deleted: ', item);
+            item.fadeOut();
+        })
+        .fail(function(err) {
+            console.log('err when updating a item: ', err);
+        });
+}
+
+function editItemFormSubmit(e) {
+    var editItemForm = $('.editItemForm')
+    var name = editItemForm.find('.name').val();
+    var value = editItemForm.find('.value').val();
+    var id = editItemForm.find('button').attr('data-id');
+
+    console.log('Item name updated: ', name);
+    console.log('Item value updated: ', value);
+    $.ajax({
+            url: '/home/item',
+            method: 'PUT',
+            data: {
+                name: name,
+                value: value,
+                id: id
+            }
+        })
+        .done(function(data) {
+            console.log('successful updated');
+            console.log('data: ', data);
+        })
+        .fail(function(err) {
+            console.log('err when updating a item: ', err);
+        });
+}
 
 
 

@@ -11,20 +11,20 @@ router.post('/', (req, res) => {
         res.status(200).send(room);
     });
 });
-// router.delete('/', (req, res) => {
-//     console.log('delete: ', req.body);
-//     Room.delete(req.body, (err, score) => {
-//         if (err) return res.status(404).send(err);
-//         res.status(200).send(score);
-//     });
-// });
-// router.put('/', (req, res) => {
-//     console.log('update: ', req.body);
-//     Room.update(req.body, (err, score) => {
-//         if (err) return res.status(404).send(err);
-//         res.send('update one score successfully');
-//     });
-// });
+router.delete('/', (req, res) => {
+    console.log('delete: ', req.body);
+    Item.delete(req.body, (err, item) => {
+        if (err) return res.status(404).send(err);
+        res.status(200).send(item);
+    });
+});
+router.put('/', (req, res) => {
+    console.log('update: ', req.body);
+    Item.update(req.body, (err, item) => {
+        if (err) return res.status(404).send(err);
+        res.status(200).send(item);
+    });
+});
 
 
 module.exports = router;

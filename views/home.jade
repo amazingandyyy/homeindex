@@ -19,7 +19,7 @@ block content
 								tr
 									th item
 									th value($)
-									th edit/delete
+									th 
 							thead.addItemTHead
 								form.addItemForm
 									tr
@@ -30,30 +30,18 @@ block content
 										th
 											button.add(class="btn btn-primary btn-xs" type="submit") add item to this room
 							tbody.itemsTable
-								tr.newItem.template
-									th.name(scope='row')
-									td.value
-									td
-										button.edit(class="btn btn-primary btn-xs") edit
-										button.delete(class="btn btn-danger btn-xs") delete
-								tr.oldItem.template
-									th.name(scope='row')
-									td.value
-									td
-										button.edit(class="btn btn-primary btn-xs") edit
-										button.delete(class="btn btn-danger btn-xs") delete
-	.editterDiv
-		.container
-			.row
-				.col-xs-12.col-sm-2
-				.col-xs-12.col-sm-10
-					form.messageDiv.editterForm
-						.panel.panel-default
-							.panel-body
-								input(class="name" placeholder="test name" name="name")
-								input(class="score" placeholder="test score" name="score")
-								input(class="total" placeholder="test total" name="total")
-								button(type='submit' class="btn btn-primary btn-xs") update
+							tr.newItem.template.item
+								th.name(scope='row')
+								td.value
+								td
+									button.edit(class="btn btn-primary btn-xs") edit
+									button.delete(class="btn btn-danger btn-xs") delete
+							tr.oldItem.template.item
+								th.name(scope='row')
+								td.value
+								td
+									button.edit(class="btn btn-primary btn-xs") edit
+									button.delete(class="btn btn-danger btn-xs") delete
 	.addRoomDiv
 		.container
 			.row
@@ -78,5 +66,19 @@ block content
 								button(type='submit' class="btn btn-block btn-success btn-md") Update
 								br
 								button(type='submit' class="btn btn-block btn-danger btn-md") Delete
+								br
+								.cancel(class="btn btn-block btn-default") Cancel
+	.editItemDiv
+		.container
+			.row
+				.col-xs-12.col-sm-4
+				.col-xs-12.col-sm-4
+					form.editItemForm.editterForm
+								h4 Edit Item
+								input(class="name form-control" placeholder="Item name" name="name" required)
+								br
+								input(class="value form-control" placeholder="Item value($)" name="value" type="number" required)
+								br
+								button(type='submit' class="btn btn-block btn-primary btn-md") Update
 								br
 								.cancel(class="btn btn-block btn-default") Cancel
