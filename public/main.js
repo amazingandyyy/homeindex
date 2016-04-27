@@ -12,6 +12,7 @@ function init() {
     check();
     $('.addRoomForm').submit(addRoomFormSubmit);
     $('.addItemForm').submit(addItemFormSubmit);
+    // $('.editRoomForm').submit(editRoomFormSubmit);
     $('.editItemForm').submit(editItemFormSubmit);
     $('.addRoomForm .cancel').click(addRoomCancelClicked);
     $('.editRoomForm .cancel').click(editRoomCancelClicked);
@@ -19,6 +20,7 @@ function init() {
 
     $('.roomContainer').on('click', '.roomContainer button' - '.showall', roomSelected);
     $('.roomContainer').on('dblclick', '.roomContainer button' - '.showall', roomEdit);
+    $('.editRoomDiv').find('.delete').on('click', roomDelete);
     $('.itemsTable').on('click', '.item .edit', itemEdit);
     $('.itemsTable').on('click', '.item .delete', itemDelete);
     $('.roomContainer').find('.showall').click(showAllRoomSelected);
@@ -257,6 +259,7 @@ function roomEdit(e) {
     editRoomDiv.fadeIn(100).css('display', 'inline-block');
     editRoomDiv.find('.container').addClass('animated bounceIn');
     editRoomDiv.find('button.update').attr('data-id', id);
+    editRoomDiv.find('.delete').attr('data-id', id);
 }
 
 function itemEdit(e) {
@@ -301,6 +304,32 @@ function itemDelete(e) {
         })
         .fail(function(err) {
             console.log('err when updating a item: ', err);
+        });
+}
+function roomDelete(e) {
+    e.preventDefault();
+    // console.log('Item Delete');
+    var id = $(e.target).attr('data-id');
+    console.log('e.target', e.target);
+    // console.log('Id: ', id);
+
+    $.ajax({
+            url: '/home/room',
+            method: 'DELETE',
+            data: {
+                id: id
+            }
+        })
+        .done(function(data) {
+            console.log('dataaaa: ', data);
+            console.log('successful deleting');
+            console.log('data: ', data.id);
+            var room = $('.roomContainer').find(`button[data-id='${id}']`);
+            console.log('item been deleted: ', item);
+            room.remove();
+        })
+        .fail(function(err) {
+            console.log('err when updating a room: ', err);
         });
 }
 
