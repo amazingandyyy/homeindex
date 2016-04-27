@@ -11,11 +11,11 @@ var db = mysql.createConnection({
 
 db.connect();
 
-// db.query(`CREATE TABLE rooms (
+// db.query(`CREATE TABLE IF NOT EXISTS rooms (
 //             id int PRIMARY KEY AUTO_INCREMENT,
 //             name TEXT
 //         )`);
-// db.query(`CREATE TABLE items (
+// db.query(`CREATE TABLE IF NOT EXISTS items (
 //             id int PRIMARY KEY AUTO_INCREMENT,
 //             name TEXT,
 //             value int,
