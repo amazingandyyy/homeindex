@@ -21,6 +21,14 @@ router.get('/', (req, res) => {
     });
 });
 
+router.delete('/', (req, res) => {
+    console.log('delete: ', req.body);
+    Room.delete(req.body, (err, room) => {
+        if (err) return res.status(404).send(err);
+        res.status(200).send(room);
+    });
+});
+
 router.get('/getSpecificRoom', (req, res) => {
     console.log('get a room of id: ', req.query);
     Item.getOneRoom(req.query, (err, itemsOfRoom) => {
@@ -30,14 +38,6 @@ router.get('/getSpecificRoom', (req, res) => {
 });
 
 
-
-// router.delete('/', (req, res) => {
-//     console.log('delete: ', req.body);
-//     Room.delete(req.body, (err, score) => {
-//         if (err) return res.status(404).send(err);
-//         res.status(200).send(score);
-//     });
-// });
 // router.put('/', (req, res) => {
 //     console.log('update: ', req.body);
 //     Room.update(req.body, (err, score) => {

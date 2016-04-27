@@ -3,7 +3,7 @@ body {
     height: 100%;
     padding-bottom: 40px;
 }
-.center{
+.center {
     text-align: center;
 }
 .navbar {
@@ -29,25 +29,21 @@ body {
 .container {
     position: relative;
 }
-
-.row{
+.row {
     padding-right: 10px;
 }
-
-form.messageDiv.scoreInputForm{
+form.messageDiv.scoreInputForm {
     position: relative;
 }
-form.messageDiv.scoreInputForm button{
+form.messageDiv.scoreInputForm button {
     float: right;
 }
-
-.oldItem.template, .newRoom.template,.newItem.template{
+.oldItem.template, .newRoom.template, .newItem.template {
     display: none;
 }
-.btn.btn-xs{
+.btn.btn-xs {
     margin-left: 5px;
 }
-
 .addRoomDiv, .editRoomDiv, .editItemDiv {
     display: none;
     z-index: 99;
@@ -56,38 +52,42 @@ form.messageDiv.scoreInputForm button{
     position: absolute;
     top: 0px;
     left: 0px;
-    padding-top: 130px;
+    padding-top: 120px;
     text-align: center;
-    background: rgba(255,255,255,0.95);
+    background: rgba(255, 255, 255, 0.95);
     /*padding: 30px 50px 40px 50px;*/
-    box-shadow: 0px 5px 20px 0px rgba(0,0,0,0.4);
+    box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.4);
 }
 .editRoomDiv .btn-block, .editItemDiv .btn-block {
     margin-bottom: -8px;
     margin-top: -8px;
 }
+.editItemDiv p {
+    text-align: left;
+        margin-top: -10px;
+        margin-bottom: 3px;
+}
+.editItemDiv h4 {
+        margin-bottom: 30px;
+}
+.editItemDiv input {
+    margin-top: 3px;
+}
 .addRoomDiv input {
     margin-top: 20px;
 }
-.editRoomDiv input{
+.editRoomDiv input {
     margin-bottom: 10px;
- }
-
-.btn-group-vertical>.btn:first-child:not(:last-child),.btn-group-vertical>.btn+.btn, .btn-group-vertical>.btn+.btn-group, .btn-group-vertical>.btn-group+.btn, .btn-group-vertical>.btn-group+.btn-group {
+}
+.btn-group-vertical>.btn:first-child:not(:last-child), .btn-group-vertical>.btn+.btn, .btn-group-vertical>.btn+.btn-group, .btn-group-vertical>.btn-group+.btn, .btn-group-vertical>.btn-group+.btn-group {
     outline: none;
 }
 .table>thead>tr>th {
     vertical-align: top;
 }
-
 .btn.btn-xs {
     height: 28px;
     padding-left: 6px;
     padding-right: 6px;
 }
-
-
-
-@media (min-width: 768px) {
-
-}
+@media (min-width: 768px) {}

@@ -13,7 +13,7 @@ block content
 						button.btn.btn-default.roomBtn(type='button' data-id='#{room.id}')= room.name
 					button.btn.btn-link.addRoom(type='button') add a room
 			//- .col-sm-1
-			.col-xs-8.col-sm-8.col-md-7
+			.col-xs-8.col-sm-8.col-md-8
 				.itemContainer
 						table.table.table-hover
 							thead
@@ -81,11 +81,14 @@ block content
 				.col-xs-12.col-sm-4
 					form.editItemForm.editterForm
 								h4 Edit Item
-								input(class="name form-control" placeholder="Item name" name="name" required)
+								p name
+									input(class="name form-control" placeholder="Item name" name="name" required)
 								br
-								input(class="value form-control" placeholder="Item value($)" name="value" type="number" required)
+								p value($)
+									input(class="value form-control" placeholder="Item value($)" name="value" type="number" required)
 								br
-								input(class="category form-control" placeholder="Item category" name="category" type="text")
+								p category
+									input(class="category form-control" placeholder="Item category" name="category" type="text")
 								br
 								button(type='submit' class="btn btn-block btn-primary btn-md") Update
 								br

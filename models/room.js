@@ -14,11 +14,11 @@ exports.create = function(room, cb) {
 
 exports.delete = function(room, cb) {
     console.log('id: ', room.id);
-    db.run(`DELETE FROM scores WHERE id = '${room.id}'`, cb(null, {
+    db.query(`DELETE FROM rooms WHERE id = '${room.id}'`, cb(null, {
         id: room.id
     }));
 };
 
-exports.update = function(room, cb) {
-    db.run(`UPDATE scores SET name = '${room.name}' WHERE id = '${room.id}'`, cb)
-};
+// exports.update = function(room, cb) {
+//     db.run(`UPDATE scores SET name = '${room.name}' WHERE id = '${room.id}'`, cb)
+// };

@@ -18,8 +18,8 @@ function init() {
     $('.editRoomForm .cancel').click(editRoomCancelClicked);
     $('.editItemForm .cancel').click(editItemCancelClicked);
 
-    $('.roomContainer').on('click', '.roomContainer button' - '.showall', roomSelected);
-    $('.roomContainer').on('dblclick', '.roomContainer button' - '.showall', roomEdit);
+    $('.roomContainer').on('click', '.roomBtn', roomSelected);
+    $('.roomContainer').on('dblclick', '.roomBtn', roomEdit);
     $('.editRoomDiv').find('.delete').on('click', roomDelete);
     $('.itemsTable').on('click', '.item .edit', itemEdit);
     $('.itemsTable').on('click', '.item .delete', itemDelete);
@@ -28,7 +28,6 @@ function init() {
 }
 
 function check() {
-
     var length = $('.btn.btn-default.showall.selected.btn-primary').length;
     if (length === 1) {
         $('.addItemTHead').addClass('hidden');
@@ -36,8 +35,8 @@ function check() {
         $('.addItemTHead').removeClass('hidden');
     }
     console.log('Checked length: ', length);
-    var room =$('.roomContainer').find('.roomBtn.selected').text();
-$('.addItemTHead').find('button.add.btn.btn-primary.btn-xs').text(`add to ${room}`);
+    var room = $('.roomContainer').find('.roomBtn.selected').text();
+    $('.addItemTHead').find('button.add.btn.btn-primary.btn-xs').text(`add to ${room}`);
 }
 
 function intializeAllItems() {
@@ -99,6 +98,7 @@ function editRoomCancelClicked(e) {
     }, 300);
     editRoomDiv.find('input').val('');
 }
+
 function editItemCancelClicked(e) {
     console.log('editItemCancelClicked');
     e.preventDefault();
@@ -198,41 +198,41 @@ function roomSelected(e) {
     $room.addClass('selected btn-primary');
     // if ($('.itemsTable').find('tr') == 0) {
 
-        $.ajax({
-                url: '/home/room/getSpecificRoom',
-                method: 'GET',
-                data: {
-                    id: id
-                }
-            })
-            .done(function(data) {
-                console.log('successfully get items of this room');
-                console.log('data: ', data);
-                data.reverse();
-                var newItemArr = [];
-                for (var i = 0; i < data.length; i++) {
-                    console.log(`${data[i]}: `, data[i]);
-                    var newItem = $('.template.newItem').clone();
-                    newItem.removeClass('template');
-                    newItem.addClass('animated fadeIn');
-                    newItem.attr('data-id', `${data[i].id}`);
-                    newItem.find('.edit').attr('data-id', `${data[i].id}`);
-                    newItem.find('.delete').attr('data-id', `${data[i].id}`);
-                    newItem.find('.name').text(`${data[i].name}`);
-                    newItem.find('.value').text(`${data[i].value}`);
-                    newItemArr.push(newItem);
-                }
-                // console.log('newItem: ', newItem);
-                console.log('itemsTable: ', $('.itemsTable'));
-                // $('.itemsTable').children('tr').not('.template').remove();
-                $('.itemsTable').empty();
-                // var aaa = $('.itemsTable:not(:has(.template))');
-                // console.log('aaa: ', aaa);
-                $('.itemsTable').prepend(newItemArr);
-            })
-            .fail(function(err) {
-                console.log('err when getting a room: ', err);
-            });
+    $.ajax({
+            url: '/home/room/getSpecificRoom',
+            method: 'GET',
+            data: {
+                id: id
+            }
+        })
+        .done(function(data) {
+            console.log('successfully get items of this room');
+            console.log('data: ', data);
+            data.reverse();
+            var newItemArr = [];
+            for (var i = 0; i < data.length; i++) {
+                console.log(`${data[i]}: `, data[i]);
+                var newItem = $('.template.newItem').clone();
+                newItem.removeClass('template');
+                newItem.addClass('animated fadeIn');
+                newItem.attr('data-id', `${data[i].id}`);
+                newItem.find('.edit').attr('data-id', `${data[i].id}`);
+                newItem.find('.delete').attr('data-id', `${data[i].id}`);
+                newItem.find('.name').text(`${data[i].name}`);
+                newItem.find('.value').text(`${data[i].value}`);
+                newItemArr.push(newItem);
+            }
+            // console.log('newItem: ', newItem);
+            console.log('itemsTable: ', $('.itemsTable'));
+            // $('.itemsTable').children('tr').not('.template').remove();
+            $('.itemsTable').empty();
+            // var aaa = $('.itemsTable:not(:has(.template))');
+            // console.log('aaa: ', aaa);
+            $('.itemsTable').prepend(newItemArr);
+        })
+        .fail(function(err) {
+            console.log('err when getting a room: ', err);
+        });
     // }
 
 
@@ -254,12 +254,16 @@ function roomEdit(e) {
     e.preventDefault();
     var $room = $(e.target);
     var id = $room.attr('data-id');
+    var name = $('.roomContainer').find(`button[data-id='${id}']`).text();
+
     console.log('editRoom clicked');
     var editRoomDiv = $('.editRoomDiv');
     editRoomDiv.fadeIn(100).css('display', 'inline-block');
     editRoomDiv.find('.container').addClass('animated bounceIn');
     editRoomDiv.find('button.update').attr('data-id', id);
     editRoomDiv.find('.delete').attr('data-id', id);
+    editRoomDiv.find('input').val(name);
+
 }
 
 function itemEdit(e) {
@@ -277,6 +281,7 @@ function itemEdit(e) {
 
     editItemDiv.find('input.name').val(name);
     editItemDiv.find('input.value').val(value);
+    editItemDiv.find('h4').text(`Update ${name}`);
     editItemDiv.find('input.category').val(category);
     editItemDiv.find('button').attr('data-id', id);
 }
@@ -306,6 +311,7 @@ function itemDelete(e) {
             console.log('err when updating a item: ', err);
         });
 }
+
 function roomDelete(e) {
     e.preventDefault();
     // console.log('Item Delete');
@@ -324,9 +330,22 @@ function roomDelete(e) {
             console.log('dataaaa: ', data);
             console.log('successful deleting');
             console.log('data: ', data.id);
-            var room = $('.roomContainer').find(`button[data-id='${id}']`);
-            console.log('item been deleted: ', item);
-            room.remove();
+            var room = $('.roomContainer').find(`button[data-id='${data.id}']`);
+            console.log('item been deleted: ', room);
+            room.addClass('animated hinge');
+            setTimeout(function() {
+                room.remove();
+            }, 1000)
+
+            var editRoomDiv = $('.editRoomDiv');
+            editRoomDiv.fadeOut(100);
+            setTimeout(function() {
+                editRoomDiv.css('display', 'none');
+            }, 300);
+            editRoomDiv.find('input').val('');
+
+            $('.roomContainer').find('.showall').addClass('selected btn-primary');
+            check();
         })
         .fail(function(err) {
             console.log('err when updating a room: ', err);
