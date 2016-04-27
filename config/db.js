@@ -19,9 +19,10 @@ db.connect();
 //             id int PRIMARY KEY AUTO_INCREMENT,
 //             name TEXT,
 //             value int,
+//             category TEXT,
 //             room int
 //         )`);
-
+//
 // db.end();
 
 
