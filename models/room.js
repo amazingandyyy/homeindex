@@ -14,7 +14,7 @@ exports.create = function(room, cb) {
 
 exports.delete = function(room, cb) {
     console.log('id: ', room.id);
-    db.query(`DELETE FROM items WHERE room = '${room.id}'`, cb);
+    db.query(`DELETE FROM items WHERE room = '${room.id}'`);
     db.query(`DELETE FROM rooms WHERE id = '${room.id}'`, cb(null, {
         id: room.id
     }));

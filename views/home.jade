@@ -66,12 +66,12 @@ block content
 				.col-xs-12.col-sm-4
 				.col-xs-12.col-sm-4
 					form.editRoomForm.editterForm
-								h4 Edit this Room
-								input(class="name form-control" placeholder="Room name" name="name" required)
+								h4 Edit Room
+								//- input(class="name form-control" placeholder="Room name" name="name" required)
+								//- br
+								//- button(type='submit' class="update btn btn-block btn-success btn-md") Update
 								br
-								button(type='submit' class="update btn btn-block btn-success btn-md") Update
-								br
-								.delete(class="btn btn-block btn-danger btn-md") Delete
+								.delete(class="btn btn-block btn-danger btn-md") Delete room
 								br
 								.cancel(class="btn btn-block btn-default") Cancel
 	.editItemDiv
@@ -90,6 +90,6 @@ block content
 								p category
 									input(class="category form-control" placeholder="Item category" name="category" type="text")
 								br
-								button(type='submit' class="btn btn-block btn-primary btn-md") Update
+								button(type='submit' class="btn btn-block btn-primary btn-md") Update 
 								br
 								.cancel(class="btn btn-block btn-default") Cancel

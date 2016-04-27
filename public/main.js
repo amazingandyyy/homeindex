@@ -263,6 +263,9 @@ function roomEdit(e) {
     editRoomDiv.find('button.update').attr('data-id', id);
     editRoomDiv.find('.delete').attr('data-id', id);
     editRoomDiv.find('input').val(name);
+    editRoomDiv.find('h4').text(`Update ${name}`);
+    editRoomDiv.find('.delete').text(`Delete ${name}`);
+
 
 }
 
@@ -284,6 +287,8 @@ function itemEdit(e) {
     editItemDiv.find('h4').text(`Update ${name}`);
     editItemDiv.find('input.category').val(category);
     editItemDiv.find('button').attr('data-id', id);
+    editItemDiv.find('button').text(`Update ${name}`);
+
 }
 
 function itemDelete(e) {
@@ -335,7 +340,7 @@ function roomDelete(e) {
             room.addClass('animated hinge');
             setTimeout(function() {
                 room.remove();
-            }, 1000)
+            }, 500)
 
             var editRoomDiv = $('.editRoomDiv');
             editRoomDiv.fadeOut(100);
@@ -345,6 +350,7 @@ function roomDelete(e) {
             editRoomDiv.find('input').val('');
 
             $('.roomContainer').find('.showall').addClass('selected btn-primary');
+            intializeAllItems();
             check();
         })
         .fail(function(err) {
