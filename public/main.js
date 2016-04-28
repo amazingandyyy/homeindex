@@ -198,13 +198,7 @@ function roomSelected(e) {
     $room.addClass('selected btn-primary');
     // if ($('.itemsTable').find('tr') == 0) {
 
-    $.ajax({
-            url: '/home/room/getSpecificRoom',
-            method: 'GET',
-            data: {
-                id: id
-            }
-        })
+    $.get(`/home/room/${id}`)
         .done(function(data) {
             console.log('successfully get items of this room');
             console.log('data: ', data);

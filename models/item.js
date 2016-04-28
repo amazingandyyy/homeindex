@@ -7,8 +7,8 @@ exports.getAll = function(cb) {
     db.query(`SELECT * FROM items`,cb);
 };
 
-exports.getOneRoom = function(room,cb) {
-    db.query(`SELECT items.name, items.value, items.category, items.id FROM items INNER JOIN rooms ON items.room=rooms.id WHERE rooms.id=${room.id};`, cb);
+exports.getOneRoom = function(id,cb) {
+    db.query(`SELECT items.name, items.value, items.category, items.id FROM items INNER JOIN rooms ON items.room=rooms.id WHERE rooms.id=${id};`, cb);
 };
 
 exports.create = function(item, cb) {
@@ -16,9 +16,9 @@ exports.create = function(item, cb) {
     db.query(`INSERT INTO items (name, value, category, room) VALUES ('${item.name}' , '${item.value}', '${item.category}', '${item.room}')`, cb);
 };
 
-exports.delete = function(item, cb) {
+exports.delete = function(id, cb) {
     console.log('id: ', item.id);
-    db.query(`DELETE FROM items WHERE id = '${item.id}'`, cb)
+    db.query(`DELETE FROM items WHERE id = '${id}'`, cb)
 };
 
 exports.update = function(item, cb) {

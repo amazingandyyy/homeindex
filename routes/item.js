@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
 });
 router.delete('/', (req, res) => {
     console.log('delete: ', req.body);
-    Item.delete(req.body, (err, item) => {
+    Item.delete(req.body.id, (err, item) => {
         if (err) return res.status(404).send(err);
         res.status(200).send(item);
     });
