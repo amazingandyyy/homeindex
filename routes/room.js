@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    console.log('delete room id: ', req.params.id);
+    console.log('delete: ', req.body);
     Room.delete(req.params.id, (err, room) => {
         if (err) return res.status(404).send(err);
         res.status(200).send(room);
