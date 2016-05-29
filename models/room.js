@@ -25,12 +25,13 @@ exports.create = function(room, cb) {
     db.query(`INSERT INTO rooms SET ?`, room, cb);
 };
 
-exports.delete = function(room, cb) {
-    console.log('id: ', room.id);
-    db.query(`DELETE FROM items WHERE room = '${room.id}'`);
-    db.query(`DELETE FROM rooms WHERE id = '${room.id}'`, cb(null, {
-        id: room.id
-    }));
+exports.delete = function(id, cb) {
+    console.log('checked');
+    console.log('id: ', id);
+    // db.query(`DELETE FROM items WHERE room = '${room.id}'`);
+    // db.query(`DELETE FROM rooms WHERE id = '${room.id}'`, cb(null, {
+    //     id: room.id
+    // }));
 };
 
 // exports.update = function(room, cb) {

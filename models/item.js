@@ -17,7 +17,7 @@ exports.create = function(item, cb) {
 };
 
 exports.delete = function(id, cb) {
-    console.log('id: ', item.id);
+    console.log('id: ', id);
     db.query(`DELETE FROM items WHERE id = '${id}'`, cb)
 };
 
