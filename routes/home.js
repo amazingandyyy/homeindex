@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
         if (err) return res.status(404).send('cannot find rooms');
         res.render('home', {
                 title: "Home",
-                theme: "readable",
+                theme: "paper",
                 active: "active",
                 rooms: rooms,
         });

@@ -129,7 +129,7 @@ function addRoomFormSubmit(e) {
             newRoom.text(`${name}`);
             newRoom.addClass('animated flipInX');
             newRoom.attr('data-id', `${data.insertId}`);
-            $('.roomContainer button:nth-last-child(1)').before(newRoom);
+            $('.roomContainer button:nth-last-child(1)').after(newRoom);
 
 
             var addRoomDiv = $('.addRoomDiv');
@@ -202,18 +202,19 @@ function roomSelected(e) {
         .done(function(data) {
             console.log('successfully get items of this room');
             console.log('data: ', data);
-            data.reverse();
+            // data.reverse();
             var newItemArr = [];
-            for (var i = 0; i < data.length; i++) {
-                console.log(`${data[i]}: `, data[i]);
+            for (var i = 0; i < data.items.length; i++) {
+                console.log('data: ', data.items[i]);
                 var newItem = $('.template.newItem').clone();
                 newItem.removeClass('template');
                 newItem.addClass('animated fadeIn');
-                newItem.attr('data-id', `${data[i].id}`);
-                newItem.find('.edit').attr('data-id', `${data[i].id}`);
-                newItem.find('.delete').attr('data-id', `${data[i].id}`);
-                newItem.find('.name').text(`${data[i].name}`);
-                newItem.find('.value').text(`${data[i].value}`);
+                newItem.attr('data-id', `${data.items[i].id}`);
+                newItem.find('.edit').attr('data-id', `${data.items[i].id}`);
+                newItem.find('.delete').attr('data-id', `${data.items[i].id}`);
+                newItem.find('.name').text(`${data.items[i].name}`);
+                newItem.find('.value').text(`${data.items[i].value}`);
+                newItem.find('.category').text(`${data.items[i].category}`);
                 newItemArr.push(newItem);
             }
             // console.log('newItem: ', newItem);
@@ -289,7 +290,7 @@ function itemDelete(e) {
     e.preventDefault();
     // console.log('Item Delete');
     var id = $(e.target).attr('data-id');
-    // console.log('Id: ', id);
+    console.log('Id: ', id);
 
     $.ajax({
             url: '/home/item',
@@ -299,12 +300,9 @@ function itemDelete(e) {
             }
         })
         .done(function(data) {
-            console.log('dataaaa: ', data);
-            console.log('successful deleting');
-            console.log('data: ', data.id);
             var item = $('.itemsTable').find(`tr.item[data-id='${id}']`);
             console.log('item been deleted: ', item);
-            item.remove();
+            item.fadeOut().remove();
         })
         .fail(function(err) {
             console.log('err when updating a item: ', err);
@@ -315,20 +313,17 @@ function roomDelete(e) {
     e.preventDefault();
     // console.log('Item Delete');
     var id = $(e.target).attr('data-id');
-    console.log('e.target', e.target);
-    // console.log('Id: ', id);
+    // console.log('e.target', e.target);
+    console.log('delete room Id: ', id);
 
     $.ajax({
-            url: '/home/room',
-            method: 'DELETE',
-            data: {
-                id: id
-            }
+            url: `/home/room/${id}`,
+            method: 'DELETE'
         })
         .done(function(data) {
-            console.log('dataaaa: ', data);
-            console.log('successful deleting');
-            console.log('data: ', data.id);
+            // console.log('dataaaa: ', data);
+            // console.log('successful deleting');
+            // console.log('data: ', data.id);
             var room = $('.roomContainer').find(`button[data-id='${data.id}']`);
             console.log('item been deleted: ', room);
             room.addClass('animated hinge');

@@ -10,11 +10,9 @@ exports.getAll = function(cb) {
 exports.getOne = function(id, cb) {
     db.query('SELECT * FROM rooms WHERE id=?', id, function(err, rooms) {
         if(err) return cb(err);
-
         db.query('SELECT * FROM items WHERE room=?', id, function(err, items) {
             if(err) return cb(err);
             cb(null, rooms[0], items);
-
         })
 
     })
@@ -25,11 +23,12 @@ exports.create = function(room, cb) {
     db.query(`INSERT INTO rooms SET ?`, room, cb);
 };
 
-exports.delete = function(room, cb) {
-    console.log('id: ', room.id);
-    db.query(`DELETE FROM items WHERE room = '${room.id}'`);
-    db.query(`DELETE FROM rooms WHERE id = '${room.id}'`, cb(null, {
-        id: room.id
+exports.delete = function(id, cb) {
+    console.log('checked');
+    console.log('id: ', id);
+    db.query(`DELETE FROM items WHERE room = '${id}'`);
+    db.query(`DELETE FROM rooms WHERE id = '${id}'`, cb(null, {
+        id: id
     }));
 };
 
