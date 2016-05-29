@@ -198,17 +198,11 @@ function roomSelected(e) {
     $room.addClass('selected btn-primary');
     // if ($('.itemsTable').find('tr') == 0) {
 
-    $.ajax({
-            url: '/home/room/getSpecificRoom',
-            method: 'GET',
-            data: {
-                id: id
-            }
-        })
+    $.get(`/home/room/${id}`)
         .done(function(data) {
             console.log('successfully get items of this room');
             console.log('data: ', data);
-            data.reverse();
+            // data.reverse();
             var newItemArr = [];
             for (var i = 0; i < data.length; i++) {
                 console.log(`${data[i]}: `, data[i]);
@@ -295,7 +289,7 @@ function itemDelete(e) {
     e.preventDefault();
     // console.log('Item Delete');
     var id = $(e.target).attr('data-id');
-    // console.log('Id: ', id);
+    console.log('Id: ', id);
 
     $.ajax({
             url: '/home/item',
@@ -321,20 +315,17 @@ function roomDelete(e) {
     e.preventDefault();
     // console.log('Item Delete');
     var id = $(e.target).attr('data-id');
-    console.log('e.target', e.target);
-    // console.log('Id: ', id);
+    // console.log('e.target', e.target);
+    console.log('delete room Id: ', id);
 
     $.ajax({
-            url: '/home/room',
-            method: 'DELETE',
-            data: {
-                id: id
-            }
+            url: `/home/room/${id}`,
+            method: 'DELETE'
         })
         .done(function(data) {
-            console.log('dataaaa: ', data);
-            console.log('successful deleting');
-            console.log('data: ', data.id);
+            // console.log('dataaaa: ', data);
+            // console.log('successful deleting');
+            // console.log('data: ', data.id);
             var room = $('.roomContainer').find(`button[data-id='${data.id}']`);
             console.log('item been deleted: ', room);
             room.addClass('animated hinge');

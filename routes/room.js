@@ -13,6 +13,7 @@ router.post('/', (req, res) => {
     });
 });
 
+// GET /api/rooms
 router.get('/', (req, res) => {
     console.log('get a room of id: ', req.query);
     Item.getAll((err, items) => {
@@ -21,20 +22,27 @@ router.get('/', (req, res) => {
     });
 });
 
-router.delete('/', (req, res) => {
-    console.log('delete: ', req.body);
-    Room.delete(req.body, (err, room) => {
+router.delete('/:id', (req, res) => {
+    console.log('delete room id: ', req.params.id);
+    Room.delete(req.params.id, (err, room) => {
         if (err) return res.status(404).send(err);
         res.status(200).send(room);
     });
 });
+// GET /api/rooms/32
+router.get('/:id', (req, res) => {
+    Room.getOne(req.params.id, function(err, room, items) {
+        if(err) return req.status(400).send(err);
 
-router.get('/getSpecificRoom', (req, res) => {
-    console.log('get a room of id: ', req.query);
-    Item.getOneRoom(req.query, (err, itemsOfRoom) => {
-        if (err) return res.status(404).send(err);
-        res.status(200).send(itemsOfRoom);
-    });
+        res.send({
+            room: room,
+            items: items
+        });
+    })
+    // Item.getOneRoom(req.params.id, (err, itemsOfRoom) => {
+    //     if (err) return res.status(404).send(err);
+    //     res.status(200).send(itemsOfRoom);
+    // });
 });
 
 
