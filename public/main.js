@@ -319,11 +319,8 @@ function roomDelete(e) {
     console.log('delete room Id: ', id);
 
     $.ajax({
-            url: '/home/room',
-            method: 'DELETE',
-            data: {
-                id: id
-            }
+            url: `/home/room/${id}`,
+            method: 'DELETE'
         })
         .done(function(data) {
             // console.log('dataaaa: ', data);

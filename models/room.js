@@ -28,10 +28,10 @@ exports.create = function(room, cb) {
 exports.delete = function(id, cb) {
     console.log('checked');
     console.log('id: ', id);
-    // db.query(`DELETE FROM items WHERE room = '${room.id}'`);
-    // db.query(`DELETE FROM rooms WHERE id = '${room.id}'`, cb(null, {
-    //     id: room.id
-    // }));
+    db.query(`DELETE FROM items WHERE room = '${id}'`);
+    db.query(`DELETE FROM rooms WHERE id = '${id}'`, cb(null, {
+        id: id
+    }));
 };
 
 // exports.update = function(room, cb) {
